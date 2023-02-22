@@ -13,12 +13,16 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+        - app_network
     
   adminer:
     image: adminer
     restart: always
     ports:
       - '8080:8080'
+    networks:
+        - app_network
   
   springboot:
     depends_on:
@@ -36,6 +40,8 @@ services:
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"
       }'
+    networks:
+      - app_network
     volumes:
       - .m2:/root/.m2
     stdin_open: true
@@ -52,8 +58,15 @@ services:
     restart: always
     depends_on:
       - springboot
+    networks:
+        - app_network
 
 
 
 volumes:
   mysql-data:
+  
+networks:
+  app_network:
+    driver: bridge
+
