@@ -13,6 +13,7 @@ public class MyConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(final CorsRegistry registry) {
+                System.out.println("\n\n\n\n __________________________ \n\n\n\n\n Adding the Configurations");
                 registry.addMapping("/**").allowedMethods("*").allowedHeaders("*");
             }
         };
